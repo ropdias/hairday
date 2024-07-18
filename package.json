@@ -1,0 +1,14 @@
+{
+  "name": "hairday",
+  "version": "1.0.0",
+  "main": "index.html",
+  "scripts": {
+    "server": "json-server --watch server.json --port 3333"
+  },
+  "author": "Rodrigo P. Dias",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "json-server": "1.0.0-alpha.21"
+  }
+}
