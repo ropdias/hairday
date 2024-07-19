@@ -7,7 +7,7 @@
   },
   "author": "Rodrigo P. Dias",
   "license": "ISC",
-  "description": "",
+  "description": "Aplicação Web de agendamento para corte de cabelo",
   "dependencies": {
     "json-server": "1.0.0-alpha.21"
   }
