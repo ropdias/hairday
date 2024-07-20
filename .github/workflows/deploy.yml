@@ -23,8 +23,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Set NODE_ENV to production
-        run: echo "NODE_ENV=production" >> $GITHUB_ENV
       - name: Install NodeJS # Sometimes we don't need this step if the runner already has it installed
         uses: actions/setup-node@v4
         with:
@@ -33,6 +31,8 @@ jobs:
         run: npm i -g pnpm
       - name: Install dependencies with pnpm
         run: pnpm install --frozen-lockfile # installing dependencies from pnpm-lock.yaml
+      - name: Set NODE_ENV to production
+        run: echo "NODE_ENV=production" >> $GITHUB_ENV
       - name: Build project
         run: pnpm run build
       - name: Upload artifact
