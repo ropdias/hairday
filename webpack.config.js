@@ -49,6 +49,13 @@ module.exports = {
           'css-loader',
         ],
       },
+      {
+        test: /\.svg$/,
+        type: 'asset/resource', // treats SVG files as resources
+        generator: {
+          filename: 'assets/[name][ext]', // defines the file name in the 'assets' folder
+        },
+      },
     ],
   },
 };
