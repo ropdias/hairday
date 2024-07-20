@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   target: 'web',
@@ -35,13 +37,17 @@ module.exports = {
         },
       ],
     }),
+    ...(devMode ? [] : [new MiniCssExtractPlugin()]), // Adding MiniCssExtractPlugin only in production
   ],
 
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [
+          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+        ],
       },
     ],
   },
