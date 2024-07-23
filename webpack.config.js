@@ -55,6 +55,16 @@ module.exports = {
           filename: 'assets/[name][ext]', // defines the file name in the 'assets' folder
         },
       },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
     ],
   },
 };
