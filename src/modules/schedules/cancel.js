@@ -1,9 +1,12 @@
+import { schedulesDay } from './load.js';
+import { scheduleCancel } from '../../services/schedule-cancel.js';
+
 const periods = document.querySelectorAll('.period');
 console.log(periods);
 
 // Creating onClickEvent for every list
 periods.forEach((period) => {
-  period.addEventListener('click', (event) => {
+  period.addEventListener('click', async (event) => {
     if (event.target.classList.contains('cancel-icon')) {
       const item = event.target.closest('li');
       const { id } = item.dataset;
@@ -14,7 +17,8 @@ periods.forEach((period) => {
         );
 
         if (isConfirm) {
-          console.log('REMOVER');
+          await scheduleCancel({ id });
+          await schedulesDay();
         }
       }
     }
