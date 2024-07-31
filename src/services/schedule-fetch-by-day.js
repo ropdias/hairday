@@ -1,19 +1,11 @@
-import dayjs from 'dayjs';
-import { apiConfig } from './api-config.js';
+import { scheduleFetchByDayAPI } from './schedule-fetch-by-day-api';
+import { scheduleFetchByDayLocalStorage } from './schedule-fetch-by-day-local-storage';
+import { useAPI } from './api-config';
 
-export async function scheduleFetchByDay({ date }) {
-  try {
-    const response = await fetch(`${apiConfig.baseURL}/schedules`);
-
-    const data = await response.json();
-
-    const dailySchedules = data.filter((schedule) =>
-      dayjs(date).isSame(schedule.when, 'day')
-    );
-
-    return dailySchedules;
-  } catch (error) {
-    console.log(error);
-    alert('Não foi possível buscar os agendamentos do dia selecionado.');
+export async function scheduleFetchByDay(data) {
+  if (useAPI) {
+    return scheduleFetchByDayAPI(data);
+  } else {
+    return scheduleFetchByDayLocalStorage(data);
   }
 }

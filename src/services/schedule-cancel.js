@@ -1,19 +1,11 @@
-import { apiConfig } from './api-config.js';
+import { scheduleCancelAPI } from './schedule-cancel-api';
+import { scheduleCancelLocalStorage } from './schedule-cancel-local-storage';
+import { useAPI } from './api-config';
 
-export async function scheduleCancel({ id }) {
-  console.log(id);
-  try {
-    const response = await fetch(`${apiConfig.baseURL}/schedules/${id}`, {
-      method: 'DELETE',
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    alert('Agendamento cancelado com sucesso !');
-  } catch (error) {
-    console.log(error);
-    alert('Não foi possível cancelar o agendamento.');
+export async function scheduleCancel(data) {
+  if (useAPI) {
+    return scheduleCancelAPI(data);
+  } else {
+    return scheduleCancelLocalStorage(data);
   }
 }

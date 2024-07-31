@@ -1,16 +1,11 @@
-import { apiConfig } from './api-config.js';
+import { scheduleNewAPI } from './schedule-new-api';
+import { scheduleNewLocalStorage } from './schedule-new-local-storage';
+import { useAPI } from './api-config';
 
-export async function scheduleNew({ id, name, when }) {
-  try {
-    await fetch(`${apiConfig.baseURL}/schedules`, {
-      method: 'POST',
-      header: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id, name, when }),
-    });
-
-    alert('Agendamento realizado com sucesso!');
-  } catch (error) {
-    console.log(error);
-    alert('Não foi possível agendar. Tente novamente mais tarde.');
+export async function scheduleNew(data) {
+  if (useAPI) {
+    return scheduleNewAPI(data);
+  } else {
+    return scheduleNewLocalStorage(data);
   }
 }

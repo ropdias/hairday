@@ -2,7 +2,6 @@ import { schedulesDay } from './load.js';
 import { scheduleCancel } from '../../services/schedule-cancel.js';
 
 const periods = document.querySelectorAll('.period');
-console.log(periods);
 
 // Creating onClickEvent for every list
 periods.forEach((period) => {
