@@ -4,9 +4,17 @@ on:
   push:
     branches:
       - main
+  
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed # This ensures the workflow runs only when a PR is merged (closed)
 
 jobs:
   deploy:
+    # Run the job if a PR is merged or there's a direct push to the main branch
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
     runs-on: ubuntu-latest
 
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
@@ -35,6 +43,18 @@ jobs:
         run: echo "NODE_ENV=production" >> $GITHUB_ENV
       - name: Build project
         run: pnpm run build
+      # This step increments the project version (patch level) and pushes the changes and tags to the remote repository
+      - name: Bump version and push tags
+        run: |
+          # Set Git user details for the GitHub Actions bot
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # Increment version number (patch) and create a new Git tag
+          pnpm version patch -m "ci: bump version to %s [skip ci]"
+          # Push changes and the newly created tag to the remote repository
+          git push --follow-tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Use GitHub token for authentication
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
